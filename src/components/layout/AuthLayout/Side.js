@@ -11,23 +11,10 @@ const Side = ({ children, content, ...rest }) => {
                     backgroundImage: `url('/img/others/auth-side-bg.jpg')`,
                 }}
             >
-                <Logo mode="dark" />
-                <div>
-                    <div className="mb-6 flex items-center gap-4">
-                        <div className="text-white">
-                            <div className="font-semibold text-base">
-                                Tiziano Valeri
-                            </div>
-                            <span className="opacity-80">Direzione generale</span>
-                        </div>
-                    </div>
-                    <p className="text-lg text-white opacity-90">
-                        Gestione attività, processi e servizi. 
-                    </p>
-                </div>
-                <div className=' h-64'>&nbsp</div>
-                <div className=' h-64'>&nbsp</div>
-
+                <Logo mode="dark"/>
+                <div className=' text-4xl font-bold text-white pl-4'>AREA OPERATORE</div>
+                <div className=' h-96'></div>
+                <div className=' h-16'></div>
                 <span >
                     <img  src='logoEdgDark.png' alt={`${APP_NAME} logo`} />
                 </span>

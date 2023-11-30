@@ -7,15 +7,15 @@ import {
     FormContainer,
     Alert,
 } from 'components/ui'
-import { PasswordInput, ActionLink } from 'components/shared'
+import { PasswordInput } from 'components/shared'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import useAuth from 'utils/hooks/useAuth'
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Please enter your user name'),
-    password: Yup.string().required('Please enter your password'),
+    email: Yup.string().required('Inserisci username'),
+    password: Yup.string().required('Inserisci password'),
     rememberMe: Yup.bool(),
 })
 
@@ -23,8 +23,6 @@ const SignInForm = (props) => {
     const {
         disableSubmit = false,
         className,
-        forgotPasswordUrl = '/forgot-password',
-        signUpUrl = '/sign-up',
     } = props
 
     const [message, setMessage] = useTimeOutMessage()
@@ -80,7 +78,7 @@ const SignInForm = (props) => {
                                     type="text"
                                     autoComplete="off"
                                     name="email"
-                                    placeholder="User Name"
+                                    placeholder="Username"
                                     component={Input}
                                 />
                             </FormItem>
@@ -103,9 +101,6 @@ const SignInForm = (props) => {
                                     component={Checkbox}
                                     children="Rimani collegato"
                                 />
-                                <ActionLink to={forgotPasswordUrl}>
-                                    Password dimenticata?
-                                </ActionLink>
                             </div>
                             <Button
                                 block
@@ -116,8 +111,7 @@ const SignInForm = (props) => {
                                 {isSubmitting ? 'Signing in...' : 'Sign In'}
                             </Button>
                             <div className="mt-4 text-center">
-                                <span>Non hai ancora un account? </span>
-                                <ActionLink to={signUpUrl}>Registrati</ActionLink>
+                                <span>Per problemi di accesso contatta l'amminitratore di sistema</span>
                             </div>
                         </FormContainer>
                     </Form>
