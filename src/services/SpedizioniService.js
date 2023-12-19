@@ -16,6 +16,14 @@ export async function apiGetSpedizioni(params) {
     })
 }
 
+export async function apiGetSpedizioniArchiviate(params) {
+    return ApiService.fetchData({
+        url: '/spedizioni/spedizioni-filter-archiviate',
+        method: 'get',
+        params,
+    })
+}
+
 export async function apiGetSpedizione(id) {
     return ApiService.fetchData({
         url: `/spedizioni/spedizione/${id}`,

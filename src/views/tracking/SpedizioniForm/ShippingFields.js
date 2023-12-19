@@ -68,7 +68,18 @@ const ShippingFields = (props) => {
                     placeholder="Città"
                     component={Input}
                 />
-            </FormItem>                                                              
+            </FormItem>
+            <FormItem
+                label="Codice nazione"
+            >
+                <Field
+                    type="text"
+                    autoComplete="off"
+                    name="codice_nazione"
+                    placeholder="Codice nazione"
+                    component={Input}
+                />
+            </FormItem>                                                                             
         </>
     )
 }

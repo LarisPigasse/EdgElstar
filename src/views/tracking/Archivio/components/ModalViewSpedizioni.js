@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Dialog, Button, Tooltip, Drawer, toast, Notification } from 'components/ui'
-import { toggleModalViewSpedizioni, setDataSpedizioni, toggleDrawerInsertTracking } from '../store/stateSlice'
-import { getTracking, deleteTracking } from '../store/dataSlice'
+import React, { useEffect } from 'react'
+import { Dialog, Button } from 'components/ui'
+import { toggleModalViewSpedizioni, setDataSpedizioni } from '../store/stateSlice'
+import { getTracking } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import {HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi'
-import { ConfirmDialog } from 'components/shared'
-import TrackingForm from './TrackingForm'
 import { BsFileEarmarkPdf } from 'react-icons/bs'
 
 const ModalViewSpedizioni = () => {  
-
-    //const [tracking, setTracking] = useState([]);
 
     const dispatch = useDispatch()
 
@@ -18,13 +13,8 @@ const ModalViewSpedizioni = () => {
         (state) => state.trackingSpedizioni.state.modalViewSpedizioni
     )
 
-    const drawerInsertTracking = useSelector(
-        (state) => state.trackingSpedizioni.state.drawerInsertTracking
-    )
-
     const onDialogClose = () => {
         dispatch(toggleModalViewSpedizioni(false))
-        //setTracking([])
         dispatch(getTracking(0))
         dispatch(setDataSpedizioni([]))
     }
@@ -39,65 +29,13 @@ const ModalViewSpedizioni = () => {
 
     const fetchData = async () => {
         if(dataSpedizioni.id_spedizione){
-        //   let dati = await getTrackingSpedizione(dataSpedizioni.id_spedizione)
-        //   setTracking(dati);
-
           dispatch(getTracking(dataSpedizioni.id_spedizione))
         }
     }
 
     useEffect(() => {
         fetchData();
-    }, [dataSpedizioni]);
-
-    const [open, setOpen] = useState(false)
-    
-    const handleClose = () => {
-        setOpen(false)
-    }
-    const handleConfirm = async () => {
-        
-        let ok = await deleteTracking({
-            id_spedizione:dataSpedizioni.id_spedizione, 
-            id_tracking:selectedTracking,
-        })
-
-        if(ok){
-            fetchData();
-            toast.push(
-                <Notification
-                    title="Tracking registrato con successo."
-                    type="success"
-                    duration={3500}
-                >
-                    qualcosa...
-                </Notification>,
-                {
-                    placement: 'top-center',
-                }
-            )
-        }
-
-
-        setOpen(false)
-    }
-    
-    const [selectedTracking, setSelectedTracking] = useState(null);
-    
-    function handleClick(id_tracking) {
-        setOpen(true);
-        setSelectedTracking(id_tracking);
-    }
-
-    const onDialogCloseDrawer = () => {
-        dispatch(toggleDrawerInsertTracking(false))
-       
-        // dispatch(setDataSpedizioni([]))
-    }
-
-    const handleAddTracking = () => {
-        dispatch(toggleDrawerInsertTracking(true))
-    }
+    }, [dataSpedizioni]);  
 
     return (
   
@@ -109,30 +47,6 @@ const ModalViewSpedizioni = () => {
             contentClassName={'overflow-y-auto'}
             width={1280}
         >
-
-            <Drawer
-                title="Inserisci dettaglio del tracking"
-                isOpen={drawerInsertTracking}
-                onClose={onDialogCloseDrawer}
-                onRequestClose={onDialogCloseDrawer}
-            >
-                <TrackingForm/>
-            </Drawer>
-
-            <ConfirmDialog
-                isOpen={open}
-                onClose={handleClose}
-                onRequestClose={handleClose}
-                type={'danger'}
-                title={'Elimina dettaglio tracking'}
-                onCancel={handleClose}
-                onConfirm={handleConfirm}
-                confirmButtonColor={'red-600'}
-                id_tracking = {selectedTracking}
-            >
-                <p>Confermi la cancellazione del dettaglio {selectedTracking} selezionato?</p>
-            </ConfirmDialog>
-
             <h4>Dettagli Spedizione {dataSpedizioni.id_spedizione}</h4>            
 
             <div className="mt-8">
@@ -166,7 +80,7 @@ const ModalViewSpedizioni = () => {
                                     </div>
                                 </div>
                             </div>
-                        : null}                                                 
+                        : null}                        
                     </div>
                     <div className="col-span-2 mb-2">
 
@@ -177,11 +91,6 @@ const ModalViewSpedizioni = () => {
                                     <th className="border border-gray-200 p-1">Località</th>
                                     <th className="border border-gray-200 p-1">Evento</th>
                                     <th className="border border-gray-200 p-1">Info</th>
-                                    <th className="px-2 py-4">
-                                        <Tooltip title="Aggiungi dettaglio">
-                                            <HiOutlinePlus onClick={handleAddTracking} className="text-sky-600 hover:text-red-600 text-lg"/>
-                                        </Tooltip>    
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -196,11 +105,6 @@ const ModalViewSpedizioni = () => {
                                                 <td className="border border-gray-200 p-2">{track.localita}</td>
                                                 <td className="border border-gray-200 p-2">{track.stato}</td>
                                                 <td className="border border-gray-200 p-2">{track.info}</td>
-                                                <td className="p-2">
-                                                    <Tooltip title="Elimina dettaglio">
-                                                        <HiOutlineTrash onClick={() =>  handleClick(track.id_tracking)}  className="text-gray-400 hover:text-red-600 text-lg" />
-                                                    </Tooltip>    
-                                                </td>
                                             </tr>
                                     )
                                     })

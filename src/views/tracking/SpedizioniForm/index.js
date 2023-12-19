@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { FormContainer, Button, hooks } from 'components/ui'
+import { FormContainer, Button } from 'components/ui'
 import { AdaptableCard } from 'components/shared'
 import { Form, Formik } from 'formik'
 import BasicFields from './BasicFields'
@@ -12,21 +12,29 @@ import { injectReducer } from 'store/index'
 
 injectReducer('trackingSpedizioneForm', reducer)
 
-const { useUniqueId } = hooks
+//const { useUniqueId } = hooks
 
-const validationSchema = Yup.object().shape({
-    altro_numero: Yup.number().required('Inserire il codice spedizione'),
-    id_cliente: Yup.number().required('Inserire il cliente'),
-    destinatario: Yup.string().required('Inserire il destinatario'),
-    destinazione: Yup.string().required('Inserire la destinazione'),
-    id_corriere: Yup.number().required('Inserire il corriere'),
+const validationSchema1 = Yup.object().shape({
+    altro_numero: Yup.number().required('Inserire codice spedizione'),
+    id_cliente: Yup.number().required('Inserire cliente'),
+    destinatario: Yup.string().required('Inserire destinatario'),
+    destinazione: Yup.string().required('Inserire destinazione'),
+    id_corriere: Yup.number().required('Inserire corriere'),
     indirizzo: Yup.string().required('Inserire indirizzo'),
 })
+
+const idSpedizioneSchema = Yup.number().required('Inserire id spedizione');
+
+const validationSchema = validationSchema1.concat(
+    Yup.object().shape({
+        id_spedizione: idSpedizioneSchema,
+      })    
+)
 
 const SpedizioniForm = forwardRef((props, ref) => {
     const { type, initialData, onFormSubmit, onDiscard } = props
 
-    const newId = useUniqueId('product-')
+    //const newId = useUniqueId('product-')
 
     return (
         <>
@@ -41,7 +49,8 @@ const SpedizioniForm = forwardRef((props, ref) => {
                           }))
                         : [],
                 }}
-                validationSchema={validationSchema}
+                
+                validationSchema={type === 'new' ? validationSchema : validationSchema1}
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
                     formData.tags = formData.tags.map((tag) => tag.value)
@@ -54,13 +63,13 @@ const SpedizioniForm = forwardRef((props, ref) => {
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
-                {({ values, touched, errors, isSubmitting }) => (
+                {({ values, touched, errors, isSubmitting, type }) => (
                     <Form>
                         <FormContainer>
                             <AdaptableCard className="mb-4 p-2" divider>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className='mb-4 col-span-2'>
-                                        <h4>Inserisci una nuova spedizione</h4>
+                                        {(type === 'new') ? <h4>Inserisci una nuova spedizione</h4> : <h4>Modifica la spedizione</h4>}
                                     </div>
                                     <div className="px-2 col-span-2 lg:col-span-1">
                                         <BasicFields

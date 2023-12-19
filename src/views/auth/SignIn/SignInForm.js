@@ -108,10 +108,10 @@ const SignInForm = (props) => {
                                 variant="solid"
                                 type="submit"
                             >
-                                {isSubmitting ? 'Signing in...' : 'Sign In'}
+                                {isSubmitting ? 'Accesso in corso...' : 'Accedi'}
                             </Button>
                             <div className="mt-4 text-center">
-                                <span>Per problemi di accesso contatta l'amminitratore di sistema</span>
+                                <span>Per problemi di accesso contatta l'amministratore di sistema</span>
                             </div>
                         </FormContainer>
                     </Form>

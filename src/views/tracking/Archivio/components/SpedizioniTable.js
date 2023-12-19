@@ -1,15 +1,11 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
-import { Tooltip } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineTrash, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { getSpedizioni, setTableData, setIdDelete } from '../store/dataSlice'
+import { getSpedizioni, setTableData } from '../store/dataSlice'
 import {
     setSelectedRows,
     addRowItem,
     removeRowItem,
-    setDeleteMode,
     toggleModalViewSpedizioni,
     setDataSpedizioni
 } from '../store/stateSlice'
@@ -40,43 +36,6 @@ const SpedizioniData = ({ row }) => {
         <span>{dayjs(row.data_spedizione).format('DD/MM/YYYY')}</span>
     )
 }
-
-const ActionColumn = ({ row }) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  const onEdit = () => {
-    navigate(`/tracking/spedizioni-edit/${row.id_spedizione}`)
-}
-
-  const onDelete = () => {
-      dispatch(setDeleteMode('single'))
-      dispatch(setIdDelete({id_spedizione: row.id_spedizione, id_cliente: row.id_cliente}))
-  }
- 
-  return (
-      <div className="flex justify-end text-lg">
-
-          <Tooltip title="Modifica">
-              <span
-                  className="cursor-pointer p-2 hover:text-blue-500"
-                  onClick={onEdit}
-              >
-                  <HiOutlinePencil />
-              </span>
-          </Tooltip>
-          <Tooltip title="Elimina">
-              <span
-                  className="cursor-pointer p-2 hover:text-red-500"
-                  onClick={onDelete}
-              >
-                  <HiOutlineTrash />
-              </span>
-          </Tooltip>
-      </div>
-  )
-}
-
 
 const SpedizioniTable = () => {
 
@@ -137,7 +96,7 @@ const SpedizioniTable = () => {
             cell: (props) => {
                 const row = props.row.original
                 return <span className="font-bold">{row.altro_numero}</span>
-            },      
+            },
           },                               
           {
             header: 'Destinazione',
@@ -150,12 +109,7 @@ const SpedizioniTable = () => {
           {
             header: 'Stato',
             accessorKey: 'stato',
-          },                    
-          {
-              header: '',
-              id: 'action',
-              cell: (props) => <ActionColumn row={props.row.original} />,
-          },
+          },                             
       ],
       []
   )

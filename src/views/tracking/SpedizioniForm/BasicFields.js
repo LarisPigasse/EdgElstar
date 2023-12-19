@@ -6,7 +6,7 @@ import { useSelector,useDispatch } from 'react-redux'
 import { getCorrieri, getClienti } from './store/dataSlice'
 
 const BasicFields = (props) => {
-    const { values, touched, errors } = props
+    const { values, touched, errors, type } = props
    
     const dispatch = useDispatch()
 
@@ -26,6 +26,18 @@ const BasicFields = (props) => {
         }
     })
     
+    const stato = [
+        { label: 'In consegna', value: 'IN CONSEGNA' },
+        { label: 'Consegnata', value: 'CONSEGNATA' },
+        { label: 'Prenotata', value: 'PRENOTATA' },
+        { label: 'Ritirata', value: 'RITIRATA' },
+        { label: 'Partita', value: 'PARTITA' },
+        { label: 'In transito', value: 'IN TRANSITO' },
+        { label: 'Mancata consegna', value: 'MANCATA CONSEGNA' },
+        { label: 'Ritorno al mittente', value: 'RITORNO AL MITTENTE' },
+        { label: 'Smarrita', value: 'SMARRITA' },        
+    ]
+    
     const clientiData = useSelector(
         (state) => state.trackingSpedizioneForm.data.clientiData
     )
@@ -40,6 +52,20 @@ const BasicFields = (props) => {
     return (
         <>
             <FormItem
+                label="Id spedizione"
+                invalid={errors.id_spedizione && touched.id_spedizione}
+                errorMessage={errors.id_spedizione}
+            >
+                <Field
+                    type="text"
+                    autoComplete="off"
+                    name="id_spedizione"
+                    placeholder="Id spedizione"
+                    component={Input}
+                    readonly = {type === 'new' ? 'false' : 'true'}
+                />
+            </FormItem>        
+            <FormItem
                 label="Codice spedizione"
                 invalid={errors.altro_numero && touched.altro_numero}
                 errorMessage={errors.altro_numero}
@@ -48,7 +74,7 @@ const BasicFields = (props) => {
                     type="text"
                     autoComplete="off"
                     name="altro_numero"
-                    placeholder=""
+                    placeholder="Codice spedizione"
                     component={Input}
                 />
             </FormItem>
@@ -103,7 +129,34 @@ const BasicFields = (props) => {
                             />
                         )}
                     </Field>
-            </FormItem>                
+            </FormItem>
+            
+            <FormItem
+                    label="Stato spedizione"
+                    invalid={errors.stato && touched.stato}
+                    errorMessage={errors.stato}                    
+                >
+                    <Field name="stato">
+                        {({ field, form }) => (
+                            <Select
+                                field={field}
+                                form={form}
+                                options={stato}
+                                value={stato.filter(
+                                    (stato) =>
+                                        stato.value === values.stato
+                                )}
+                                onChange={(option) =>
+                                    form.setFieldValue(
+                                        field.name,
+                                        option.value
+                                    )
+                                }
+                            />
+                        )}
+                    </Field>
+            </FormItem>
+
             <FormItem
                 label="Note"
                 labelClass="!justify-start"
