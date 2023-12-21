@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Dialog, Button, Tooltip, Drawer, toast, Notification } from 'components/ui'
 import { toggleModalViewSpedizioni, setDataSpedizioni, toggleDrawerInsertTracking } from '../store/stateSlice'
-import { getTracking, deleteTracking } from '../store/dataSlice'
+import { getTracking, deleteTracking, getPodPdf } from '../store/dataSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi'
 import { ConfirmDialog } from 'components/shared'
@@ -55,6 +55,14 @@ const ModalViewSpedizioni = () => {
     const handleClose = () => {
         setOpen(false)
     }
+
+    const handleClickPod = () => {
+        alert('Hai cliccato il pulsante!');
+        if(dataSpedizioni.id_spedizione){
+            dispatch(getPodPdf(dataSpedizioni.id_spedizione))
+        }        
+    };
+
     const handleConfirm = async () => {
         
         let ok = await deleteTracking({
@@ -162,7 +170,7 @@ const ModalViewSpedizioni = () => {
                                         <BsFileEarmarkPdf className="text-red-500" />
                                     </div>
                                     <div className="font-semibold text-gray-900 dark:text-gray-100">
-                                        POD
+                                        <button onClick={handleClickPod}>POD</button>
                                     </div>
                                 </div>
                             </div>

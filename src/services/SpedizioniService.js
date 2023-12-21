@@ -1,5 +1,11 @@
 import ApiService from './ApiService'
 
+export async function apiGetPodPdf(id) {
+    return ApiService.fetchData({
+        url: `/spedizioni/pod`,
+        method: 'get',
+    })
+}
 
 export async function apiGetTrackingSpedizione(id) {
     return ApiService.fetchData({
