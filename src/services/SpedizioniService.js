@@ -2,8 +2,9 @@ import ApiService from './ApiService'
 
 export async function apiGetPodPdf(id) {
     return ApiService.fetchData({
-        url: `/spedizioni/pod`,
+        url: `/spedizioni/pod/${id}`,
         method: 'get',
+        responseType: 'blob'
     })
 }
 

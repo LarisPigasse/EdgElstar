@@ -62,7 +62,6 @@ const BasicFields = (props) => {
                     name="id_spedizione"
                     placeholder="Id spedizione"
                     component={Input}
-                    readonly = {type === 'new' ? 'false' : 'true'}
                 />
             </FormItem>        
             <FormItem

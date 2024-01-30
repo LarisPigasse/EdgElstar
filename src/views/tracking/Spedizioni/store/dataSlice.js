@@ -22,13 +22,18 @@ export const getTracking = createAsyncThunk(
     }
 )
 
-export const getPodPdf = createAsyncThunk(
-    'trackingSpedizioni/data/getPodPdf',
-    async (data) => {
-        const response = await apiGetPodPdf(data)
-        return response.data
-    }
-)
+export const getPodPdf = async ( data ) => {
+    const response = await apiGetPodPdf(data)
+    return response.data
+}
+
+// export const getPodPdf = createAsyncThunk(
+//     'trackingSpedizioni/data/getPodPdf',
+//     async (data) => {
+//         const response = await apiGetPodPdf(data)
+//         return response.data
+//     }
+// )
 
 export const insertSpedizioni = async ( data ) => {
     const response = await apiInsertSpedizioni(data)

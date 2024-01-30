@@ -15,7 +15,7 @@ injectReducer('trackingSpedizioneForm', reducer)
 //const { useUniqueId } = hooks
 
 const validationSchema1 = Yup.object().shape({
-    altro_numero: Yup.number().required('Inserire codice spedizione'),
+    altro_numero: Yup.string().required('Inserire codice spedizione'),
     id_cliente: Yup.number().required('Inserire cliente'),
     destinatario: Yup.string().required('Inserire destinatario'),
     destinazione: Yup.string().required('Inserire destinazione'),
