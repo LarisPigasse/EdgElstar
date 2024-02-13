@@ -1,15 +1,13 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
 import { Tooltip } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineEye, HiOutlineTrash, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAccount, setTableData } from '../store/dataSlice'
 import {
     setSelectedRows,
     addRowItem,
     removeRowItem,
-    setDeleteMode,
-    setSelectedRow,
     toggleModalUpdateAccount,
     toggleModalViewAccount,
     setDataAccount
@@ -45,12 +43,6 @@ const ActionColumn = ({ row }) => {
     dispatch(toggleModalUpdateAccount(true))
     dispatch(setDataAccount(row))
   }
-
-  const onDelete = () => {
-      dispatch(setDeleteMode('single'))
-      dispatch(setSelectedRow(row.id_account))
-  }
-
   const onView = () => {
     dispatch(toggleModalViewAccount(true))
    // dispatch(setDataOperatore(row))
@@ -76,14 +68,6 @@ const ActionColumn = ({ row }) => {
                   onClick={onUpdate}
               >
                   <HiOutlinePencil />
-              </span>
-          </Tooltip>
-          <Tooltip title="Elimina">
-              <span
-                  className="cursor-pointer p-2 hover:text-red-500"
-                  onClick={onDelete}
-              >
-                  <HiOutlineTrash />
               </span>
           </Tooltip>
       </div>
@@ -139,6 +123,18 @@ const AccountTable = () => {
             header: 'Email',
             accessorKey: 'email',
           },
+          {
+            header: 'Tipo',
+            accessorKey: 'tipo_account',
+          },
+          {
+            header: 'Profilo',
+            accessorKey: 'profilo',
+          },
+          {
+            header: 'Nickname',
+            accessorKey: 'nickname',
+          },                               
           {
               header: '',
               id: 'action',

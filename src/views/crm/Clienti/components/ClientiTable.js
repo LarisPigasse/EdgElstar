@@ -1,15 +1,13 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
 import { Tooltip } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineEye, HiOutlineTrash, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineEye, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import { getClienti, setTableData } from '../store/dataSlice'
 import {
     setSelectedRows,
     addRowItem,
     removeRowItem,
-    setDeleteMode,
-    setSelectedRow,
     toggleModalUpdateCliente,
     toggleModalViewCliente,
     setDataCliente
@@ -46,11 +44,6 @@ const ActionColumn = ({ row }) => {
     dispatch(setDataCliente(row))
   }
 
-  const onDelete = () => {
-      dispatch(setDeleteMode('single'))
-      dispatch(setSelectedRow(row.id_cliente))
-  }
-
   const onView = () => {
     dispatch(toggleModalViewCliente(true))
    // dispatch(setDataOperatore(row))
@@ -72,14 +65,6 @@ const ActionColumn = ({ row }) => {
                   onClick={onUpdate}
               >
                   <HiOutlinePencil />
-              </span>
-          </Tooltip>
-          <Tooltip title="Elimina">
-              <span
-                  className="cursor-pointer p-2 hover:text-red-500"
-                  onClick={onDelete}
-              >
-                  <HiOutlineTrash />
               </span>
           </Tooltip>
       </div>
@@ -132,13 +117,33 @@ const ClientiTable = () => {
               accessorKey: 'cliente',
           },
           {
-            header: 'Partita IVA',
-            accessorKey: 'partita_iva',
-        },          
+            header: 'Indirizzo',
+            accessorKey: 'indirizzo',
+          },
+          {
+            header: 'Cap',
+            accessorKey: 'cap',
+          },
+          {
+            header: 'Città',
+            accessorKey: 'citta',
+          },
+          {
+            header: 'Prov.',
+            accessorKey: 'provincia',
+          },
           {
             header: 'Email',
             accessorKey: 'email',
           },
+          {
+            header: 'Telefono',
+            accessorKey: 'telefono',
+          },                                                              
+          {
+            header: 'Partita IVA',
+            accessorKey: 'partita_iva',
+          },          
           {
               header: '',
               id: 'action',

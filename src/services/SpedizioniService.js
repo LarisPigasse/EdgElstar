@@ -8,6 +8,14 @@ export async function apiGetPodPdf(id) {
     })
 }
 
+export async function apiGetAggiornamenti(params) {
+    return ApiService.fetchData({
+        url: '/spedizioni/aggiornamenti-filter',
+        method: 'get',
+        params,
+    })
+}
+
 export async function apiGetTrackingSpedizione(id) {
     return ApiService.fetchData({
         url: `/spedizioni/tracking/${id}`,
