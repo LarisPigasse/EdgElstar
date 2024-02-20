@@ -1,6 +1,6 @@
 const appConfig = {
-    //apiPrefix: 'https://tools.expressdeliverygroup.com/api',
-    apiPrefix: 'https://backend.viniabruzzesi.it/api',
+    apiPrefix: 'https://tools.expressdeliverygroup.com/api',
+    //apiPrefix: 'https://backend.viniabruzzesi.it/api',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',

@@ -8,4 +8,11 @@ export async function apiGetHomeTracking(params) {
     })
 }
 
+export async function apiAggiornaTracking(params) {
+    return ApiService.fetchData({
+        url: '/spedizioni/aggiorna',
+        method: 'get',
+        params,
+    })
+}
 

@@ -1,36 +1,49 @@
 import React from 'react'
-import { Card } from 'components/ui'
+import { Card, Button } from 'components/ui'
 import { useState, useEffect } from 'react';
-import { apiGetHomeTracking } from 'services/HomeService'
+import { apiGetHomeTracking, apiAggiornaTracking } from 'services/HomeService'
 
 const TrackingInfo = () => {
 
-    const [tracking, setTracking] = useState(null);
+    const [tracking, setTracking] = useState([]);
+    const [update, setUpdate] = useState(false);
+
+    const fetchData = async () => {
+        const result = await apiGetHomeTracking();
+        setTracking(result.data);
+    }
 
     useEffect(() => {
-      const fetchData = async () => {
-        const result = await apiGetHomeTracking();
-        setTracking(result);
-      };
-  
       fetchData();
-    }, []);
-    console.log(tracking)
-    const datas = ['a','b','c']
+    }, [update]);
+
+    const handleClick = async () => {
+        const response = await apiAggiornaTracking();
+        setUpdate(!update);
+    }
+
     return (
         <Card className="hover:border-sky-300 hover:shadow-sm">
-            <h6 className="font-semibold mb-4 text-sm">Tracking</h6>
-            <div className="flex justify-between items-center">
-                <div>
-                Dettagli
-                {datas.map((item, index) => (
-                    <div key={index}>
-                        {datas[index]}
-                        CIAO
-                    </div>
-                ))}
+            <div class="flex">
+                <div class="w-1/2">
+                    <h6 className="font-semibold mb-4 text-sm">Tracking</h6>
+                </div>
+                <div class="w-1/2 text-end">
+                    <Button
+                        className="ltr:mr-2 rtl:ml-2"
+                        variant="twoTone"
+                        onClick={handleClick}
+                    >
+                        AGGIORNA
+                    </Button>
                 </div>
             </div>
+            {tracking.length > 0 ? <>
+                <div><span className=' font-semibold mr-1'>{tracking[0].data_aggiornamento_format}</span>ultimo aggiornamento</div>
+                <div className='mt-1 text-sm'><span className=' font-bold mr-1 text-sky-600'>{tracking[0].qta_selezionata}</span>spedizioni selezionate</div>
+                <div className='mt-1 text-sm'><span className=' font-bold mr-1 text-red-600'>{tracking[0].qta_aggiornata}</span>spedizioni aggiornate</div>
+            </>    
+            : ''}
         </Card>
     )
 }
