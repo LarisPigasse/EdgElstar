@@ -1,5 +1,6 @@
 import React from 'react'
 import Side from './Side'
+import Simple from './Simple'
 // import Cover from './Cover'
 // import Simple from './Simple'
 import View from 'views'
@@ -14,9 +15,9 @@ const AuthLayout = (props) => {
             {layoutType === LAYOUT_TYPE_BLANK ? (
                 <View {...props} />
             ) : (
-                <Side>
+                <Simple>
                     <View {...props} />
-                </Side>
+                </Simple>
             )}
         </div>
     )

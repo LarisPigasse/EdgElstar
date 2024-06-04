@@ -23,6 +23,13 @@ export async function apiGetTrackingSpedizione(id) {
     })
 }
 
+export async function apiGetCercaTrackingSpedizione(id) {
+    return ApiService.fetchData({
+        url: `/spedizioni/cerca-spedizione/${id}`,
+        method: 'get',
+    })
+}
+
 export async function apiGetSpedizioni(params) {
     return ApiService.fetchData({
         url: '/spedizioni/spedizioni-filter',
