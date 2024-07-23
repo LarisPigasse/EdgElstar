@@ -12,7 +12,8 @@ import {
     HiOutlineKey,
     HiOutlineChartSquareBar,
     HiOutlineUser,
-    HiOutlineUsers,    
+    HiOutlineUsers,
+    HiOutlineLink,    
 } from 'react-icons/hi'
 
 const navigationIcon = {
@@ -30,6 +31,7 @@ const navigationIcon = {
     collapseMenu: <HiOutlineTemplate />,
     groupSingleMenu: <HiOutlineDesktopComputer />,
     groupCollapseMenu: <HiOutlineColorSwatch />,
+    link: <HiOutlineLink />,
 
     
 }

@@ -187,7 +187,20 @@ const ModalViewSpedizioni = () => {
                                     </div>
                                 </div>
                             </div>
-                        : null}                                                 
+                        : null}
+                        {dataSpedizioni.email_cliente_inviata === 'SI' && dataSpedizioni.data_email_cliente != null ?
+                            <div className="mt-4 pt-3 border-t border-sky-300">
+                                <div>
+                                    Tracking inviato il   
+                                    <span className="text-indigo-600 font-bold"> {dataSpedizioni.data_email_cliente_format.split('-')[0]} </span> 
+                                    alle 
+                                    <span className="text-gray-800 font-bold"> {dataSpedizioni.data_email_cliente_format.split('-')[1]} </span>
+                                </div>
+                                <div>
+                                    al mittente <span className="text-indigo-600 font-bold">{dataSpedizioni.email_del_cliente}</span>
+                                </div>
+                            </div>
+                        : null}                                                                         
                     </div>
                     <div className="col-span-2 mb-2">
 

@@ -23,6 +23,13 @@ export async function apiGetTrackingSpedizione(id) {
     })
 }
 
+export async function apiGetTrackingSpedizioneNoAuth(id) {
+    return ApiService.fetchData({
+        url: `/spedizioni/tracking-noauth/${id}`,
+        method: 'get',
+    })
+}
+
 export async function apiGetCercaTrackingSpedizione(id) {
     return ApiService.fetchData({
         url: `/spedizioni/cerca-spedizione/${id}`,
@@ -49,6 +56,13 @@ export async function apiGetSpedizioniArchiviate(params) {
 export async function apiGetSpedizione(id) {
     return ApiService.fetchData({
         url: `/spedizioni/spedizione/${id}`,
+        method: 'get',
+    })
+}
+
+export async function apiGetSpedizioneNoAuth(id) {
+    return ApiService.fetchData({
+        url: `/spedizioni/spedizione-noauth/${id}`,
         method: 'get',
     })
 }

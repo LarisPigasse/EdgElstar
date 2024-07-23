@@ -42,35 +42,11 @@ export const protectedRoutes = [
         authority: [ADMIN,OPERATORE,ROOT],
     },          
     {
-        key: 'crm.dashboard',
-        path: '/crm/dashboard/',
-        component: React.lazy(() => import('views/crm/Dashboard')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    }, 
-    {
-        key: 'crm.calendario',
-        path: '/crm/calendario/',
-        component: React.lazy(() => import('views/crm/Calendario')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    },
-    {
         key: 'crm.clienti',
         path: '/crm/clienti/',
         component: React.lazy(() => import('views/crm/Clienti')),
         authority: [ADMIN,OPERATORE,ROOT],
-    },    
-    {
-        key: 'crm.mailbox',
-        path: '/crm/mailbox/',
-        component: React.lazy(() => import('views/crm/Mailbox')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    },
-    {
-        key: 'crm.comunica',
-        path: '/crm/comunica/',
-        component: React.lazy(() => import('views/crm/Comunica')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    },             
+    },               
     {
         key: 'logistica.corrieri',
         path: '/logistica/corrieri/',
@@ -83,18 +59,6 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/logistica/Magazzino')),
         authority: [ADMIN,OPERATORE],
     },           
-    {
-        key: 'admin.documenti',
-        path: '/amministrazione/documenti/',
-        component: React.lazy(() => import('views/amministrazione/Documenti')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    },
-    {
-        key: 'admin.pagamenti',
-        path: '/amministrazione/pagamenti/',
-        component: React.lazy(() => import('views/amministrazione/Pagamenti')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    },
     {
         key: 'sistema.configurazione',
         path: '/sistema/configurazione/',
@@ -113,12 +77,6 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/sistema/Operatori')),
         authority: [ADMIN,OPERATORE,ROOT],
     },    
-    {
-        key: 'sistema.statistiche',
-        path: '/sistema/statistiche/',
-        component: React.lazy(() => import('views/sistema/Statistiche')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    }, 
     {
         key: 'sistema.tabelle',
         path: '/sistema/tabelle/',

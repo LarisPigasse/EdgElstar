@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
-import { Tooltip } from 'components/ui'
+import { Tooltip, Notification, toast } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineTrash, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineTrash, HiOutlinePencil, HiOutlineLink } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getSpedizioni, setTableData, setIdDelete } from '../store/dataSlice'
@@ -72,7 +72,7 @@ const ActionColumn = ({ row }) => {
               >
                   <HiOutlineTrash />
               </span>
-          </Tooltip>
+          </Tooltip>         
       </div>
   )
 }
@@ -111,6 +111,27 @@ const SpedizioniTable = () => {
       [pageIndex, pageSize, sort, query, total]
   )
 
+  const openNotification = (
+    placement,
+    title,
+    type
+) => {
+    toast.push(<Notification closable duration={2000} type={type} title={title} />, {
+        placement: placement,
+    })
+}
+  
+const handleCopy = async (spedizione) => {
+    try {
+        let numsped = btoa(spedizione*7-16)
+        await navigator.clipboard.writeText(`https://trace.expressdeliverygroup.com/spedizione/${numsped}`);
+        openNotification('top-center', 'Link copiato', 'success');
+    } catch (err) {
+        openNotification('top-center', 'Impossibile copiare il link', 'danger');
+    }
+};
+ 
+
   const columns = useMemo(
       () => [
           {
@@ -138,7 +159,26 @@ const SpedizioniTable = () => {
                 const row = props.row.original
                 return <span className="font-bold">{row.altro_numero}</span>
             },      
-          },                               
+          },
+          {
+            header: 'Num. spedizione',
+            accessorKey: 'discriminante',
+            cell: (props) => {
+                const row = props.row.original
+                return  <div className="flex flex-row"> 
+                            <div className="basis-1/2 font-bold mt-2 text-red-600">
+                                {row.discriminante}
+                            </div>
+                            <div className='basis-1/2 text-right'> 
+                                <Tooltip title="Copia link">
+                                    <div onClick={() => handleCopy(row.discriminante)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded">
+                                        <HiOutlineLink />
+                                    </div>
+                                </Tooltip>
+                            </div>
+                        </div>
+            },             
+          },                                         
           {
             header: 'Destinazione',
             accessorKey: 'destinazione',

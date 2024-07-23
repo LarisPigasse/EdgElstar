@@ -16,3 +16,11 @@ export async function apiAggiornaTracking(params) {
     })
 }
 
+export async function apiInfoClienti(params) {
+    return ApiService.fetchData({
+        url: '/clienti/info-clienti',
+        method: 'get',
+        params,
+    })
+}
+
