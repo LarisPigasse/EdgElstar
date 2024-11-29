@@ -1,28 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetSistemaClienti, apiDeleteClienti, apiInsertClienti, apiUpdateClienti } from 'services/ClientiService'
+import { apiGetNazioni } from 'services/SistemaService'
 
-export const getClienti = createAsyncThunk(
-    'crmCliente/data/getClienti',
+export const getNazioni = createAsyncThunk(
+    'sistemaNazioni/data/getNazioni',
     async (data) => {
-        const response = await apiGetSistemaClienti(data)
+        const response = await apiGetNazioni(data)
         return response.data
     }
 )
-
-export const insertClienti = async ( data ) => {
-    const response = await apiInsertClienti(data)
-    return response.data
-}
-
-export const updateClienti = async ( data, params ) => {
-    const response = await apiUpdateClienti(data, params)
-    return response.data
-}
-
-export const deleteClienti = async (data) => {
-    const response = await apiDeleteClienti(data)
-    return response.data
-}
 
 export const initialTableData = {
     total: 0,
@@ -36,7 +21,7 @@ export const initialTableData = {
 }
 
 const dataSlice = createSlice({
-    name: 'crmCliente/data',
+    name: 'sistemaNazioni/data',
     initialState: {
         loading: false,
         orderList: [],
@@ -51,17 +36,17 @@ const dataSlice = createSlice({
         },
     },
     extraReducers: {
-        [getClienti.fulfilled]: (state, action) => {
+        [getNazioni.fulfilled]: (state, action) => {
             state.orderList = action.payload.data
             state.tableData.total = action.payload.total
             state.loading = false
         },
-        [getClienti.pending]: (state) => {
+        [getNazioni.pending]: (state) => {
             state.loading = true
         },
     },
 })
 
-export const { setClienti, setTableData } = dataSlice.actions
+export const { setNazioni, setTableData } = dataSlice.actions
 
 export default dataSlice.reducer

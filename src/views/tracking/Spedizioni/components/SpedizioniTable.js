@@ -165,7 +165,7 @@ const handleCopy = async (spedizione) => {
             accessorKey: 'discriminante',
             cell: (props) => {
                 const row = props.row.original
-                return  <div className="flex flex-row"> 
+                return  <div className="flex flex-row">
                             <div className="basis-1/2 font-bold mt-2 text-red-600">
                                 {row.discriminante}
                             </div>

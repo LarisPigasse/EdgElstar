@@ -1,36 +1,40 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
-import { Tooltip } from 'components/ui'
+import { Tooltip, Avatar, } from 'components/ui'
 import { DataTable } from 'components/shared'
-import { HiOutlineEye, HiOutlinePencil } from 'react-icons/hi'
+import { HiOutlineTrash, HiOutlinePencil } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
-import { getClienti, setTableData } from '../store/dataSlice'
+import { getListini, setTableData } from '../store/dataSlice'
 import {
     setSelectedRows,
     addRowItem,
     removeRowItem,
-    toggleModalUpdateCliente,
-    toggleModalViewCliente,
-    setDataCliente
+    setDeleteMode,
+    setSelectedRow,
+    setDataListini,
+    toggleModalUpdateListini
 } from '../store/stateSlice'
+import { useNavigate } from 'react-router-dom'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import cloneDeep from 'lodash/cloneDeep'
+import { Link } from 'react-router-dom'
 
-const ClientiColumn = ({ row }) => {
-  const dispatch = useDispatch()
+const ListiniColumn = ({ row }) => {
   const { textTheme } = useThemeClass()
+  const navigate = useNavigate()
 
-  const onView = () => {
-    dispatch(toggleModalViewCliente(true))
-  } 
+  const onView = useCallback(() => {
+    navigate(`/crm/listini-peso-volume/${row.id_listino}`)
+  }, [navigate, row])
 
   return (
       <span
           className={`cursor-pointer select-none hover:${textTheme}`}
           onClick={onView}
       >
-          <span className=' text-neutral-400 text-xs'></span> <span className=' text-sky-500 font-semibold '>{row.id_cliente}</span>
+          <span className=' text-sky-500 font-semibold '>{row.id_listino}</span>
       </span>
   )
+
 }
 
 const ActionColumn = ({ row }) => {
@@ -39,25 +43,27 @@ const ActionColumn = ({ row }) => {
   const { textTheme } = useThemeClass()
 
   const onUpdate = () => {
-    dispatch(toggleModalUpdateCliente(true))
-    dispatch(setDataCliente(row))
+    dispatch(toggleModalUpdateListini(true))
+    dispatch(setDataListini(row))
   }
 
-  const onView = () => {
-    dispatch(toggleModalViewCliente(true))
-  } 
+  const onDelete = () => {
+      dispatch(setDeleteMode('single'))
+      dispatch(setSelectedRow(row.id_listino))
+  }
+
+  // const onView = () => {
+    //dispatch(toggleModalViewOperatore(true))
+    // dispatch(setDataOperatore(row))
+  //} 
+//   const onView = useCallback(() => {
+//       navigate(`/app/sistema/operatori-details/${row.id_operatore}`)
+//   }, [navigate, row])
+
   
   return (
       <div className="flex justify-end text-lg">
-          <Tooltip title="Dettagli cliente">
-              <span
-                  className={`cursor-pointer p-2 hover:${textTheme}`}
-                  onClick={onView}
-              >
-                  <HiOutlineEye />
-              </span>
-          </Tooltip>
-          <Tooltip title="Modifica">
+          <Tooltip title="Modifica listino">
               <span
                   className="cursor-pointer p-2 hover:text-blue-500"
                   onClick={onUpdate}
@@ -65,30 +71,34 @@ const ActionColumn = ({ row }) => {
                   <HiOutlinePencil />
               </span>
           </Tooltip>
+          <Tooltip title="Elimina listino">
+              <span
+                  className="cursor-pointer p-2 hover:text-red-500"
+                  onClick={onDelete}
+              >
+                  <HiOutlineTrash />
+              </span>
+          </Tooltip>
       </div>
   )
 }
 
 
-const ClientiTable = () => {
+const ListiniTable = () => {
 
   const tableRef = useRef(null)
 
   const dispatch = useDispatch()
 
-  const onView = useCallback((id_cliente) => {
-    dispatch(toggleModalViewCliente(true))
-  }, [dispatch]);
-
   const { pageIndex, pageSize, sort, query, total } = useSelector(
-      (state) => state.crmCliente.data.tableData
+      (state) => state.crmListini.data.tableData
   )
-  const loading = useSelector((state) => state.crmCliente.data.loading)
+  const loading = useSelector((state) => state.crmListini.data.loading)
 
-  const data = useSelector((state) => state.crmCliente.data.orderList)
+  const data = useSelector((state) => state.crmListini.data.orderList)
 
   const fetchData = useCallback(() => {
-      dispatch(getClienti({ pageIndex, pageSize, sort, query }))
+      dispatch(getListini({ pageIndex, pageSize, sort, query }))
   }, [dispatch, pageIndex, pageSize, sort, query])
 
   useEffect(() => {
@@ -107,57 +117,47 @@ const ClientiTable = () => {
       [pageIndex, pageSize, sort, query, total]
   )
 
+
+  const DettaglioListino = ({ row }) => {
+    const { textTheme } = useThemeClass()
+    return (
+        <div className="flex items-center">
+            <Link
+                className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
+                to={`/crm/listini-peso-volume/${row.id_listino}`}
+            >
+                {row.listino}
+            </Link>
+        </div>
+    )
+  }
+
   const columns = useMemo(
       () => [
           {
               header: 'Id',
-              accessorKey: 'id_cliente',
-              cell: (props) => <ClientiColumn row={props.row.original} />,
+              accessorKey: 'id_listino',
+              cell: (props) => <ListiniColumn row={props.row.original} />,
           },
           {
-              header: 'Cliente',
-              accessorKey: 'cliente',
-              cell: (props) => (
-                <div onClick={() => onView(props.row.original.id_cliente)} className="cursor-pointer">
-                  {props.row.original.cliente}
-                </div>
-              ),              
+              header: 'Listino',
+              accessorKey: 'listino',
+              cell: (props) => {
+                const row = props.row.original
+                return <DettaglioListino row={row} />
+            },               
           },
           {
-            header: 'Indirizzo',
-            accessorKey: 'indirizzo',
+            header: 'Data creazione',
+            accessorKey: 'data_listino_format',
           },
-          {
-            header: 'Cap',
-            accessorKey: 'cap',
-          },
-          {
-            header: 'Città',
-            accessorKey: 'citta',
-          },
-          {
-            header: 'Prov.',
-            accessorKey: 'provincia',
-          },
-          {
-            header: 'Email',
-            accessorKey: 'email',
-          },
-          {
-            header: 'Telefono',
-            accessorKey: 'telefono',
-          },                                                              
-          {
-            header: 'Partita IVA',
-            accessorKey: 'partita_iva',
-          },          
           {
               header: '',
               id: 'action',
               cell: (props) => <ActionColumn row={props.row.original} />,
           },
       ],
-      [onView]
+      []
   )
 
   const onPaginationChange = (page) => {
@@ -220,4 +220,4 @@ const ClientiTable = () => {
   )
 }
 
-export default ClientiTable
+export default ListiniTable

@@ -82,7 +82,19 @@ const navigationConfig = [
                 type: NAV_ITEM_TYPE_ITEM,
                 authority: [ADMIN,OPERATORE,ROOT],
                 subMenu: [],
-            },                                                                        
+            },
+            {
+                key: 'crm.listini',
+                path: '/crm/listini/',
+                title: 'Listini',
+                translateKey: 'nav.crm.listini',
+                icon: '',
+                colore: 'text-red-500',
+                type: NAV_ITEM_TYPE_ITEM,
+                authority: [ADMIN,OPERATORE,ROOT],
+                subMenu: [],
+            },
+                                                                                                
         ],
     },
     {
@@ -118,16 +130,6 @@ const navigationConfig = [
         type: NAV_ITEM_TYPE_COLLAPSE,
         authority: [ADMIN,OPERATORE,ROOT],
         subMenu: [         
-            {
-                key: 'sistema.configurazione',
-                path: '/sistema/configurazione/',
-                title: 'Configurazione',
-                translateKey: 'nav.sistema.configurazione',
-                icon: '',
-                type: NAV_ITEM_TYPE_ITEM,
-                authority: [ADMIN,OPERATORE,ROOT],
-                subMenu: [],
-            },
             {
                 key: 'sistema.account',
                 path: '/sistema/account/',

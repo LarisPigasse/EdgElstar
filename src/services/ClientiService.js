@@ -8,10 +8,13 @@ export async function apiGetSistemaClienti(params) {
     })
 }
 
-export async function apiGetClienti() {
+export async function apiGetCliente(params) {
+    //let id = params.id;
+    let id = 1072;
     return ApiService.fetchData({
-        url: '/clienti/',
+        url: `/clienti/cliente/${id}`,
         method: 'get',
+        params,
     })
 }
 
@@ -23,7 +26,7 @@ export async function apiInsertClienti(data) {
     })
 }
 
-export async function apiUpdateClienti(data, params) {
+export async function apiUpdateClienti(data,params) {
     return ApiService.fetchData({
         url: `/clienti/${params}`,
         data,
@@ -38,11 +41,4 @@ export async function apiDeleteClienti(id) {
     })
 }
 
-export async function apiGetSistemaclientiDetails(params) {
-    return ApiService.fetchData({
-        url: '/clientis/clienti-details',
-        method: 'get',
-        params,
-    })
-}
 

@@ -10,22 +10,22 @@ import {
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import { components } from 'react-select'
-import { insertCorrieri,getCorrieri } from '../store/dataSlice'
-import { toggleModalNewCorriere } from '../store/stateSlice'
+import { insertListini,getListini } from '../store/dataSlice'
+import { toggleModalNewListini } from '../store/stateSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 
 const { MultiValueLabel } = components
 
 const validationSchema = Yup.object().shape({
-    corriere: Yup.string().min(3, 'Too Short!').required('corriere required'),
+    listino: Yup.string().required('il nome del listino è richiesto')
 })
 
-const FormNewCorriere = () => {
+const FormNewListini = () => {
     const dispatch = useDispatch()
 
     const tableData = useSelector(
-        (state) => state.logisticaCorriere.data.tableData
+        (state) => state.crmListini.data.tableData
     )
 
     const onSubmit = async (formValue, setSubmitting) => {
@@ -34,24 +34,24 @@ const FormNewCorriere = () => {
        
        let { stato } = formValue
 
-        stato = stato.value;
+         stato = stato.value;
 
         formValue = {...formValue,
                         stato
         }
 
-        let ok = await insertCorrieri(formValue);
+        let ok = await insertListini(formValue);
 
-        dispatch(toggleModalNewCorriere(false))
+        dispatch(toggleModalNewListini(false))
 
-        dispatch(getCorrieri(tableData))
+        dispatch(getListini(tableData))
         toast.push(
             <Notification
-                title="Corriere registrato con successo."
+                title="Inserimento nuovo listino."
                 type="success"
                 duration={3500}
             >
-                Il nuovo corriere è stato inserito con successo
+                Il nuovo listino è stato inserito con successo
             </Notification>,
             {
                 placement: 'top-center',
@@ -62,8 +62,7 @@ const FormNewCorriere = () => {
     return (
         <Formik
             initialValues={{
-                corriere: '',
-                endpoint: '',
+                listino: '',
                 stato: ''
             }}
             validationSchema={validationSchema}
@@ -76,29 +75,15 @@ const FormNewCorriere = () => {
                     <FormContainer>
 
                         <FormItem
-                            label="Corriere"
-                            invalid={errors.corriere && touched.corriere}
-                            errorMessage={errors.corriere}
+                            label="Listino"
+                            invalid={errors.listino && touched.listino}
+                            errorMessage={errors.listino}
                         >
                             <Field
                                 type="text"
                                 autoComplete="off"
-                                name="corriere"
-                                placeholder="Enter Corriere"
-                                component={Input}
-                            />
-                        </FormItem>
-
-                        <FormItem
-                            label="Endpoint"
-                            invalid={errors.endpoint && touched.endpoint}
-                            errorMessage={errors.endpoint}
-                        >
-                            <Field
-                                type="text"
-                                autoComplete="off"
-                                name="endpoint"
-                                placeholder="Enter endpoint"
+                                name="listino"
+                                placeholder="Inserisci il nome del listino"
                                 component={Input}
                             />
                         </FormItem>
@@ -114,7 +99,7 @@ const FormNewCorriere = () => {
                                         className="min-w-[120px]"
                                         field={field}
                                         form={form}
-                                        options={[{value:'ATTIVO',label:'ATTIVO'},{value:'INATTIVO',label:'INATTIVO'}]}
+                                        options={[{value:'Attivo',label:'Attivo'},{value:'Inattivo',label:'Inattivo'}]}
                                         value={values.stato}
                                         onChange={(data) => {
                                             console.log(field);
@@ -138,4 +123,4 @@ const FormNewCorriere = () => {
     )
 }
 
-export default FormNewCorriere
+export default FormNewListini

@@ -1,14 +1,32 @@
-import React from 'react'
-import { Card } from 'components/ui'
-import { useState, useEffect } from 'react';
-import { apiInfoClienti } from 'services/HomeService'
+import React, {useState, useEffect, useCallback, } from 'react'
+import { Card, Button} from 'components/ui'
+import { getCliente } from '../store/dataSlice'
+import {
+    FaFacebookF,
+    FaTwitter,
+    FaLinkedinIn,
+    FaPinterestP,
+} from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { apiGetCliente } from 'services/ClientiService'
 
-const CustomerInfo = () => {
+const CustomerInfoField = ({ title, value }) => {
+    return (
+        <div>
+            <span>{title}</span>
+            <p className="text-gray-700 dark:text-gray-200 font-semibold">
+                {value}
+            </p>
+        </div>
+    )
+}
+
+const Profilo = () => {
 
     const [info, setInfo] = useState([]);
 
     const fetchData = async () => {
-        const result = await apiInfoClienti();
+        const result = await apiGetCliente();
         setInfo(result.data);
     }
 
@@ -16,9 +34,8 @@ const CustomerInfo = () => {
       fetchData();
     },[]);
 
-
     return (
-        <Card className="hover:border-sky-300 hover:shadow-sm">
+        <Card className="hover:border-sky-300 hover:shadow-sm ">
             <h6 className="font-semibold mb-4 text-sm">CLIENTI</h6>
             <div className="flex justify-between items-center">
                     {info.length > 0 ? (
@@ -40,4 +57,4 @@ const CustomerInfo = () => {
     )
 }
 
-export default CustomerInfo
+export default Profilo

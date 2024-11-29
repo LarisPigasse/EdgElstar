@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {apiGetCorrieri} from 'services/CorrieriService'
-import {apiGetClienti} from 'services/ClientiService'
+import {apiGetCliente} from 'services/ClientiService'
 
 export const getCorrieri = createAsyncThunk(
     'trackingSpedizioneForm/data/getCorrieri',
@@ -13,7 +13,7 @@ export const getCorrieri = createAsyncThunk(
 export const getClienti = createAsyncThunk(
     'trackingSpedizioneForm/data/getClienti',
     async () => {
-        const response = await apiGetClienti()
+        const response = await apiGetCliente()
         return response.data
     }
 )

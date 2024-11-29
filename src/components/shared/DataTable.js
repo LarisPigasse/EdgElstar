@@ -197,13 +197,16 @@ const DataTable = forwardRef((props, ref) => {
                                     <Th
                                         key={header.id}
                                         colSpan={header.colSpan}
+                                        className="wrap-header"
                                     >
                                         {header.isPlaceholder ? null : (
                                             <div
                                                 className={
                                                     classNames(
+                                                        `${header.column.columnDef.meta?.align === 'center' ? 'text-center' : ''} 
+                                                        ${header.column.columnDef.meta?.testo === 'uppercase' ? 'uppercase' : ''}
                                                         header.column.getCanSort() && 'cursor-pointer select-none point',
-                                                        loading && 'pointer-events-none'
+                                                        loading && 'pointer-events-none'`
                                                     )
                                                 }
                                                 onClick={header.column.getToggleSortingHandler()}

@@ -7,5 +7,4 @@ const appConfig = {
     locale: 'en',
     enableMock: false,
 }
-
 export default appConfig

@@ -1,26 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetSistemaClienti, apiDeleteClienti, apiInsertClienti, apiUpdateClienti } from 'services/ClientiService'
+import { apiGetListini, apiDeleteListini, apiInsertListini, apiUpdateListini } from 'services/ListiniService'
 
-export const getClienti = createAsyncThunk(
-    'crmCliente/data/getClienti',
+export const getListini = createAsyncThunk(
+    'listini/data/getListini',
     async (data) => {
-        const response = await apiGetSistemaClienti(data)
+        const response = await apiGetListini(data)
         return response.data
     }
 )
 
-export const insertClienti = async ( data ) => {
-    const response = await apiInsertClienti(data)
+export const insertListini = async ( data ) => {
+    const response = await apiInsertListini(data)
     return response.data
 }
 
-export const updateClienti = async ( data, params ) => {
-    const response = await apiUpdateClienti(data, params)
+export const updateListini = async ( data, params ) => {
+    const response = await apiUpdateListini(data, params)
     return response.data
 }
 
-export const deleteClienti = async (data) => {
-    const response = await apiDeleteClienti(data)
+export const deleteListini = async (data) => {
+    const response = await apiDeleteListini(data)
     return response.data
 }
 
@@ -36,32 +36,32 @@ export const initialTableData = {
 }
 
 const dataSlice = createSlice({
-    name: 'crmCliente/data',
+    name: 'crmListini/data',
     initialState: {
         loading: false,
         orderList: [],
         tableData: initialTableData
     },
     reducers: {
-        setOrderList: (state, action) => {
-            state.orderList = action.payload
+        setListini: (state, action) => {
+            state.apiUpdateListini = action.payload
         },
         setTableData: (state, action) => {
             state.tableData = action.payload
         },
     },
     extraReducers: {
-        [getClienti.fulfilled]: (state, action) => {
+        [getListini.fulfilled]: (state, action) => {
             state.orderList = action.payload.data
             state.tableData.total = action.payload.total
             state.loading = false
         },
-        [getClienti.pending]: (state) => {
+        [getListini.pending]: (state) => {
             state.loading = true
         },
     },
 })
 
-export const { setClienti, setTableData } = dataSlice.actions
+export const { setListini, setTableData } = dataSlice.actions
 
 export default dataSlice.reducer

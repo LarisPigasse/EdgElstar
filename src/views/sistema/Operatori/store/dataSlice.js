@@ -44,8 +44,8 @@ const dataSlice = createSlice({
         tableData: initialTableData
     },
     reducers: {
-        setOrderList: (state, action) => {
-            state.orderList = action.payload
+        setOperatori: (state, action) => {
+            state.apiUpdateOperatori = action.payload
         },
         setTableData: (state, action) => {
             state.tableData = action.payload

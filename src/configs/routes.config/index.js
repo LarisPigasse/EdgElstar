@@ -46,7 +46,25 @@ export const protectedRoutes = [
         path: '/crm/clienti/',
         component: React.lazy(() => import('views/crm/Clienti')),
         authority: [ADMIN,OPERATORE,ROOT],
-    },               
+    },
+    {
+        key: 'crm.clienti.dettagli',
+        path: '/crm/cliente/',
+        component: React.lazy(() => import('views/crm/ClientiDettagli')),
+        authority: [ADMIN,OPERATORE,ROOT],
+    },      
+    {
+        key: 'crm.listini',
+        path: '/crm/listini/',
+        component: React.lazy(() => import('views/crm/Listini')),
+        authority: [ADMIN,OPERATORE,ROOT],
+    },
+    {
+        key: 'crm.listiniPv',
+        path: '/crm/listini-peso-volume/:listinoId',
+        component: React.lazy(() => import('views/crm/ListiniPv')),
+        authority: [ADMIN,OPERATORE,ROOT],
+    }, 
     {
         key: 'logistica.corrieri',
         path: '/logistica/corrieri/',
@@ -59,12 +77,6 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/logistica/Magazzino')),
         authority: [ADMIN,OPERATORE],
     },           
-    {
-        key: 'sistema.configurazione',
-        path: '/sistema/configurazione/',
-        component: React.lazy(() => import('views/sistema/Configurazione')),
-        authority: [ADMIN,OPERATORE,ROOT],
-    },
     {
         key: 'sistema.account',
         path: '/sistema/account/',
